@@ -1,0 +1,103 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://DoHyeon-Regular.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://game_scene.tscn" type="PackedScene" id=2]
+[ext_resource path="res://speach_bubble.png" type="Texture" id=3]
+[ext_resource path="res://speach_bubble.gd" type="Script" id=4]
+
+[sub_resource type="DynamicFontData" id=1]
+font_path = "res://DoHyeon-Regular.ttf"
+
+[sub_resource type="DynamicFont" id=2]
+resource_local_to_scene = true
+size = 150
+font_data = SubResource( 1 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 80
+font_data = ExtResource( 1 )
+
+[sub_resource type="Animation" id=4]
+resource_name = "quack"
+length = 1.1
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.9, 1.1 ),
+"transitions": PoolRealArray( 2, 1, 0.5, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 1, 1 ), Vector2( 1, 1 ), Vector2( 1, 1e-05 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+
+[node name="main_scene" type="Node2D"]
+
+[node name="ViewportContainer" type="ViewportContainer" parent="."]
+margin_right = 128.0
+margin_bottom = 128.0
+rect_scale = Vector2( 7, 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Viewport" type="Viewport" parent="ViewportContainer"]
+size = Vector2( 128, 128 )
+handle_input_locally = false
+disable_3d = true
+usage = 0
+render_target_update_mode = 3
+
+[node name="game_scene" parent="ViewportContainer/Viewport" instance=ExtResource( 2 )]
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Label" type="Label" parent="UI"]
+margin_left = 269.015
+margin_top = 525.631
+margin_right = 662.015
+margin_bottom = 868.631
+custom_fonts/font = SubResource( 2 )
+text = "귀여운
+ 개구리"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="speach_bubble" type="Sprite" parent="UI"]
+visible = false
+scale = Vector2( 1, 1e-05 )
+texture = ExtResource( 3 )
+centered = false
+offset = Vector2( -112, -256 )
+script = ExtResource( 4 )
+
+[node name="Label" type="Label" parent="UI/speach_bubble"]
+margin_left = -63.3383
+margin_top = -223.186
+margin_right = 58.6617
+margin_bottom = -60.1864
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 0.231373, 0.552941, 0.482353, 1 )
+text = "꽥꽥
+울다"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UI/speach_bubble"]
+anims/quack = SubResource( 4 )
